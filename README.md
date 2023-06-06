@@ -14,13 +14,13 @@ For this system, you will need access to a consistent source of outlet power and
  - OLED FeatherWing Display screen with 128x64 resolution
  - 32GB microSD card 
 
-The component relationships and assembly are displayed in the figure below:  ![physical layout diagram](figures\layout.png)
+The component relationships and assembly are displayed in the figure below:  ![physical layout diagram](figures/layout.png)
 
 
 ## High-Level Code Overview
 ### Software Environment Setup
 The thermocouple data collection, delivery, and local storage is handled by the Arduino script flashed to the microcontroller. The thermocouple data is handed off to the Adafruit IO dashboard over WiFi, where it is displayed in realtime. An IFTTT applet is connected to this dashboard, and is triggered to send an email when the thermocouple data is outside of specified bounds. The overall logic and software flow are depicted below: 
-![software layout](figures\softwarelayout.png)
+![software layout](figures/softwarelayout.png)
 
 In preparation, the user will need to set up an Adafruit and IFTTT account. Make sure you download the "Arduino IO Library" (along with its dependencies) from an Arduino IDE v.1.6.4+ Library Manager.   
 
@@ -49,38 +49,38 @@ Within each 6 second pass of the void loop, the present time is identified along
 Wire the MCP9600 amplifier board into the I2C ports on the bottom of the RTC & SD card board. Solder in place. Since the wire you will use is likely not sheilded, having these lines at the bottom decreases the risk interferrence with the microcontroller processing. Use a screw driver to attach the exposed ends of the thermocouple probe into the MCP9600 board. 
     
 Attach the boards together by stacking the OLED, Adafruit Feather M0, and RTC & SD card reader. See the assembled unit in the figure below.
-![actal setup](figures\demo1.png)
+![actal setup](figures/demo1.png)
 
 `2`. Establish an AdafruitIO Feed
 
 Within you Adafruit account, navigate to https://io.adafruit.com  or click "IO" in the head banner to find your AIO key. This is linked to YOU, so keep this safe and if you ever regenerate it remember to update your work with the new parameter.  
-![actal setup](figures\iottutorial1.png)
+![actal setup](figures/iottutorial1.png)
 
 Go the the "Feeds" tab and select "New Feed". Give it a name and hit "Create". This will be the real-time dashboard for your WiFi-connected data stream! 
-![actal setup](figures\iottutorial3.png)
+![actal setup](figures/iottutorial3.png)
 
 
 `3`. Create an IFTTT Applet connected to AdafruitIO data
 
 Take the time to make an IFTTT account, making sure to use an email you actually check. 
-![actal setup](figures\iottutorial9.png)
+![actal setup](figures/iottutorial9.png)
 
 Once you are logged in, navigate to https://ifttt.com/adafruit 
 
 Select "Connect". 
-![actal setup](figures\iottutorial10.png)
+![actal setup](figures/iottutorial10.png)
 
 Select "Authorize". 
-![actal setup](figures\iottutorial11.png)
+![actal setup](figures/iottutorial11.png)
 
 Once you are bact at IFTTT, select "Create" to get started on your first applet. You can make 2 for free! 
-![actal setup](figures\iottutorial12.png)
+![actal setup](figures/iottutorial12.png)
 
 Specify the name of the feed you wish to pull data from, the relationship you want to monitor and the threshold. All these details together constitute as the "trigger" for the applet. 
-![actal setup](figures\iottutorial13.png)
+![actal setup](figures/iottutorial13.png)
 
 Now you specify the "action" of the applet. In our case, we want to send an email. Provide a subject line and verbage for the body. Select "Create action".
-![actal setup](figures\iottutorial16.png)
+![actal setup](figures/iottutorial16.png)
 
 
 `4`. Microcontroller status and Arduino code 
@@ -91,13 +91,13 @@ Make sure the firmware and SSL certificates for the Adafruit Feather M0 are up t
 - Flash the board with the WiFi101 example script "CheckWifiFirmwareVersion". Define the "WiFi.setPins()" in setup beforehand. The Serial print output will inform if you need to update your board
 - Flash the board with the WiFi101 example script "FirmwareUpdater". Define the "WiFi.setPins()" in setup beforehand.   
 
-![actal setup](figures\iottutorial7.png)
+![actal setup](figures/iottutorial7.png)
 
 - Open the "WiFi101 / WiFNINA Firmware/Certificates Updater" from "Examples". With a stable microUSB connection, select the COM the board is using and "Test connection". 
 - Next, select "Add domain" and include io.adafruit.com to fetch the SSL certificate. 
 - Select "Upload Certificates to WiFi module". 
 
-![actal setup](figures\iottutorial8.png)
+![actal setup](figures/iottutorial8.png)
 
 ### _Software Update_
 
@@ -106,17 +106,17 @@ The user will need to update the provided Adruino scripts for this project to wo
 If you plan on adding boards to this system, you may need to evaluate which pins are defined to which sensors as clashes have been documented to happen when defaults are left unchanged.
 
 Update the function _tc_out()_ with the name of your AdafruitIO feed you specified earlier: 
-![actal setup](figures\iottutorial4.png)
+![actal setup](figures/iottutorial4.png)
 
 Update the config.h file with your relevant WiFi access and AIO key parameters. 
-![actal setup](figures\iottutorial2.png)
+![actal setup](figures/iottutorial2.png)
 
 A problem that can occur when you are updating this file is buried in the Windows preferences--file extensions can be hidden from the name. When this happens, it can mask whether you are actually editing the '.h' file. 
-![actal setup](figures\iottutorial6.png)
+![actal setup](figures/iottutorial6.png)
 
 Go into the prefrences for 'Folder Options->View' and unselect.
 
-![actal setup](figures\iottutorial5.png)
+![actal setup](figures/iottutorial5.png)
 
 
     Flash the board.  
@@ -129,11 +129,11 @@ In the following gif, I demonstrate:
 - Simultanously, the alert boolean on the OLED screen shifts from 0 to 1. 
 - Finally I pan to my email where I open a notification that just arrived telling me that the registered temperature was outside my defined threshhold. 
  
-![demo gif](figures\IMG_1108.gif)
+![demo gif](figures/IMG_1108.gif)
 
 Since the system was recording data locally as well, I can visualize this session to get the following plot: 
 
-![alert annotated temp plot](figures\tempimage.png)
+![alert annotated temp plot](figures/tempimage.png)
 
 
 
